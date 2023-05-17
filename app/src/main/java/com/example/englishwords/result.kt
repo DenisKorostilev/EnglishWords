@@ -4,7 +4,7 @@ package com.example.englishwords
 data class Root(
     val word: String,
     val results: List<Result>,
-    val syllables: Syallable,
+    val syllables: Syllables,
     val pronunciation: Pronunciation,
     val frequency: Double
 )
@@ -16,7 +16,7 @@ data class Result(
     val typeOf: List<String>
 )
 
-data class Syallable(
+data class Syllables(
     val count: Int,
     val list: List<String>
 )
