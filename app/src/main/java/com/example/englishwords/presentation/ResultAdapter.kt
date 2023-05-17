@@ -1,12 +1,11 @@
-package com.example.englishwords
+package com.example.englishwords.presentation
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import okhttp3.internal.notify
-import okhttp3.internal.notifyAll
+import com.example.englishwords.R
 
 
 class ResultAdapter(private var dataSet: List<Result>) :
