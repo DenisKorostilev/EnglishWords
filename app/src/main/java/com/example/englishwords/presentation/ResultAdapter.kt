@@ -6,9 +6,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.englishwords.R
+import com.google.android.material.card.MaterialCardView
 
-
-class ResultAdapter(private var dataSet: List<Result>) :
+class ResultAdapter(
+    private var dataSet: List<Result>,
+    private val clickListener: (definition: String) -> Unit
+) :
     RecyclerView.Adapter<ResultAdapter.ViewHolder>() {
 
     /**
@@ -20,11 +23,15 @@ class ResultAdapter(private var dataSet: List<Result>) :
         val partOfSpeechTextView: TextView
         val synonymsTextView: TextView
 
+        val root: MaterialCardView
+
         init {
             // Define click listener for the ViewHolder's View
             definitionTextView = view.findViewById(R.id.definitionTextView)
             partOfSpeechTextView = view.findViewById(R.id.partOfSpeechTextView)
             synonymsTextView = view.findViewById(R.id.synonymsTextView)
+            root = view.findViewById(R.id.root)
+
         }
     }
 
@@ -42,15 +49,21 @@ class ResultAdapter(private var dataSet: List<Result>) :
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        viewHolder.definitionTextView.text = "Definition: ${dataSet[position].definition}"
-        viewHolder.partOfSpeechTextView.text = "PartOfSpeech: ${dataSet[position].partOfSpeech}"
-        viewHolder.synonymsTextView.text = "Synonyms: ${dataSet[position].synonyms?.joinToString (separator = ", ")}"
+        val result = dataSet[position]
+
+        viewHolder.definitionTextView.text = "Definition: ${result.definition}"
+        viewHolder.partOfSpeechTextView.text = "PartOfSpeech: ${result.partOfSpeech}"
+        viewHolder.synonymsTextView.text =
+            "Synonyms: ${result.synonyms?.joinToString(separator = ", ")}"
+        viewHolder.root.setOnClickListener {
+            clickListener(result.definition)
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.size
 
-    fun setData(dataSet: List<Result>){
+    fun setData(dataSet: List<Result>) {
         this.dataSet = dataSet
         notifyDataSetChanged()
     }
