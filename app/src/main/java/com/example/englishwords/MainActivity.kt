@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import com.google.gson.Gson
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.OkHttpClient
@@ -34,7 +35,9 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun onResponse(call: Call, response: Response) {
-                    textView.post { textView.text = response.body?.string() }
+                    val body = response.body?.string()
+                    val result = Gson().fromJson(body, Root::class.java)
+                    textView.post { textView.text = result.toString() }
                 }
             })
         }
