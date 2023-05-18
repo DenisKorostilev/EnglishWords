@@ -1,31 +1,30 @@
 package com.example.englishwords.data
 
 import android.util.Log
-import com.example.englishwords.presentation.Root
-import com.google.gson.Gson
-import okhttp3.Call
-import okhttp3.Callback
-import okhttp3.FormBody
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.Response
+import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONObject
 import java.io.IOException
 
 class TranslatorRepository {
     fun getTranslation(text: String) {
         val client = OkHttpClient()
+
+        val body = JSONObject()
+            .put("text", "$text")
+            .put("source","EN")
+            .put("target","RU")
+            .toString()
+            .toRequestBody("application/json".toMediaTypeOrNull())
+
         val request = Request.Builder()
             .url("https://deepl-translator.p.rapidapi.com/translate")
+            .addHeader("Content-Type","application/json")
             .addHeader("X-RapidAPI-Key", "376cf5ba7fmsh6b7130881991d28p1db30fjsn29a446ee05cd")
             .addHeader("X-RapidAPI-Host", "deepl-translator.p.rapidapi.com")
-            .post(FormBody.Builder()
-                .add("text", "$text")
-                .add("source","EN")
-                .add("target","RU")
-                .build()
-            )
+            .post(body)
             .build()
-
 
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
