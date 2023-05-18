@@ -23,21 +23,40 @@
             android:id="@+id/definitionTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Definition" />
+            tools:text="Definition:" />
+        <TextView
+            android:id="@+id/definitionTranslationTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            tools:text="Определение:" />
 
         <TextView
             android:id="@+id/partOfSpeechTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            tools:text="PartOfSpeech" />
+            tools:text="PartOfSpeech:" />
+        <TextView
+            android:id="@+id/partOfSpeechTranslationTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            tools:text="Часть речи:" />
 
         <TextView
             android:id="@+id/synonymsTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            tools:text="Synonyms" />
+            tools:text="Synonyms:" />
+
+        <TextView
+            android:id="@+id/synonymsTranslationTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            tools:text="Синонимы:" />
 
 
     </androidx.appcompat.widget.LinearLayoutCompat>

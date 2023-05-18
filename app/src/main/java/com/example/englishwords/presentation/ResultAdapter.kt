@@ -9,7 +9,7 @@ import com.example.englishwords.R
 import com.google.android.material.card.MaterialCardView
 
 class ResultAdapter(
-    private var dataSet: List<Result>,
+    private var dataSet: List<ResultViewItem>,
     private val clickListener: (definition: String) -> Unit
 ) :
     RecyclerView.Adapter<ResultAdapter.ViewHolder>() {
@@ -23,6 +23,10 @@ class ResultAdapter(
         val partOfSpeechTextView: TextView
         val synonymsTextView: TextView
 
+        val definitionTranslationTextView: TextView
+        val partOfSpeechTranslationTextView: TextView
+        val synonymsTranslationTextView: TextView
+
         val root: MaterialCardView
 
         init {
@@ -31,7 +35,9 @@ class ResultAdapter(
             partOfSpeechTextView = view.findViewById(R.id.partOfSpeechTextView)
             synonymsTextView = view.findViewById(R.id.synonymsTextView)
             root = view.findViewById(R.id.root)
-
+            definitionTranslationTextView = view.findViewById(R.id.definitionTranslationTextView)
+            partOfSpeechTranslationTextView = view.findViewById(R.id.partOfSpeechTranslationTextView)
+            synonymsTranslationTextView = view.findViewById(R.id.synonymsTranslationTextView)
         }
     }
 
@@ -50,20 +56,29 @@ class ResultAdapter(
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         val result = dataSet[position]
+        val resultViewItem = dataSet [position]
 
         viewHolder.definitionTextView.text = "Definition: ${result.definition}"
         viewHolder.partOfSpeechTextView.text = "PartOfSpeech: ${result.partOfSpeech}"
         viewHolder.synonymsTextView.text =
             "Synonyms: ${result.synonyms?.joinToString(separator = ", ")}"
+
+        viewHolder.definitionTranslationTextView.text = "Определение: ${resultViewItem.definitionTranslation}"
+        viewHolder.partOfSpeechTranslationTextView.text = "Часть речи: ${resultViewItem.partOfSpeechTranslation}"
+        viewHolder.synonymsTranslationTextView.text =
+            "Синонимы: ${resultViewItem.synonymsTranslation?.joinToString(separator = ", ")}"
+
         viewHolder.root.setOnClickListener {
             clickListener(result.definition)
+
+
         }
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.size
 
-    fun setData(dataSet: List<Result>) {
+    fun setData(dataSet: List<ResultViewItem>) {
         this.dataSet = dataSet
         notifyDataSetChanged()
     }

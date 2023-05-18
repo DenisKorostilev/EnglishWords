@@ -1,12 +1,12 @@
 package com.example.englishwords.data
 
-import com.example.englishwords.presentation.Root
+import com.example.englishwords.presentation.RootDTO
 import com.google.gson.Gson
 import okhttp3.*
 import java.io.IOException
 
 class WordsRemoteRepository {
-    fun getWordData(word: String, callBack: (Root) -> Unit) {
+    fun getWordData(word: String, callBack: (RootDTO) -> Unit) {
         val client = OkHttpClient()
 
         val request = Request.Builder()
@@ -22,7 +22,7 @@ class WordsRemoteRepository {
 
             override fun onResponse(call: Call, response: Response) {
                 val body = response.body?.string()
-                val result = Gson().fromJson(body, Root::class.java)
+                val result = Gson().fromJson(body, RootDTO::class.java)
                 callBack(result)
             }
 

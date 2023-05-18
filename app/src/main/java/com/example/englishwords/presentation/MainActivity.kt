@@ -31,12 +31,12 @@ class MainActivity : AppCompatActivity() {
 
 
         button.setOnClickListener {
-            val callBack: (Root) -> Unit  = { root: Root ->
-                recyclerView.post {
-                    adapter.setData(root.results)
-                }
+
+            useCase.getWordData(editText.text.toString()) { root: RootDTO ->
+                //recyclerView.post {
+                    //adapter.setData(root.results)
+//                }
             }
-            useCase.getWordData(editText.text.toString(), callBack)
         }
 
 
