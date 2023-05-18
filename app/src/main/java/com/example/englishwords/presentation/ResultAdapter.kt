@@ -11,7 +11,7 @@ import com.google.android.material.card.MaterialCardView
 
 class ResultAdapter(
     private var dataSet: MutableList<ResultViewItem>,
-    private val clickListener: () -> Unit
+    private val clickListener: (ResultViewItem) -> Unit
 ) :
 
     RecyclerView.Adapter<ResultAdapter.ViewHolder>() {
@@ -57,19 +57,19 @@ class ResultAdapter(
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        val result = dataSet[position]
+
         val resultViewItem = dataSet [position]
 
-        viewHolder.definitionTextView.text = "Definition: ${result.definition}"
-        viewHolder.partOfSpeechTextView.text = "PartOfSpeech: ${result.partOfSpeech}"
-        viewHolder.synonymsTextView.text = "Synonyms: ${result.synonyms}"
+        viewHolder.definitionTextView.text = "Definition: ${resultViewItem.definition}"
+        viewHolder.partOfSpeechTextView.text = "PartOfSpeech: ${resultViewItem.partOfSpeech}"
+        viewHolder.synonymsTextView.text = "Synonyms: ${resultViewItem.synonyms}"
 
         viewHolder.definitionTranslationTextView.text = "Определение: ${resultViewItem.definitionTranslation}"
         viewHolder.partOfSpeechTranslationTextView.text = "Часть речи: ${resultViewItem.partOfSpeechTranslation}"
         viewHolder.synonymsTranslationTextView.text = "Синонимы: ${resultViewItem.synonymsTranslation}"
 
         viewHolder.root.setOnClickListener {
-            clickListener()
+            clickListener(resultViewItem)
 
 
         }

@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.RecyclerView
 import com.example.englishwords.R
 import com.example.englishwords.data.TranslatorRepository
@@ -19,17 +20,33 @@ class MainActivity : AppCompatActivity() {
     private val wordsRepository = WordsRemoteRepository()
     private val translatorRepository = TranslatorRepository()
 
+    companion object {
+        const val DEFINITION_KEY = "DEFINITION_KEY"
+        const val DEFINITION_TRANSLATION_KEY = "DEFINITION_TRANSLATION_KEY"
+        const val PART_OF_SPEECH_KEY = "PATROFSPEECH_KEY"
+        const val PART_OF_SPEECH_TRANSLATION_KEY = "PART_OF_SPEECH_TRANSLATION_KEY"
+        const val SYNONYMS_KEY = "SYNONYMS_KEY"
+        const val SYNONYMS_TRANSLATION_KEY = "SYNONYMS_TRANSLATION_KEY"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val root = findViewById<ConstraintLayout>(R.id.root)
+
         val editText = findViewById<EditText>(R.id.editText)
         val button = findViewById<Button>(R.id.button)
 
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-        val adapter = ResultAdapter(mutableListOf()) {
+        val adapter = ResultAdapter(mutableListOf()) { resultViewItem ->
             val intent = Intent(this, TestActivity::class.java)
+            intent.putExtra(bundleOf())
+            intent.putExtra(DEFINITION_KEY, resultViewItem.definition)
+            intent.putExtra(PART_OF_SPEECH_KEY, resultViewItem.partOfSpeech)
+            intent.putExtra(SYNONYMS_KEY, resultViewItem.synonyms)
+            intent.putExtra(DEFINITION_TRANSLATION_KEY, resultViewItem.definitionTranslation)
+            intent.putExtra(PART_OF_SPEECH_TRANSLATION_KEY, resultViewItem.partOfSpeechTranslation)
+            intent.putExtra(SYNONYMS_TRANSLATION_KEY, resultViewItem.synonymsTranslation)
             startActivity(intent)
 
         }
