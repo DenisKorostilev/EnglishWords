@@ -1,5 +1,6 @@
 package com.example.englishwords.presentation
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +11,9 @@ import com.google.android.material.card.MaterialCardView
 
 class ResultAdapter(
     private var dataSet: MutableList<ResultViewItem>,
-    private val clickListener: (definition: String) -> Unit
+    private val clickListener: () -> Unit
 ) :
+
     RecyclerView.Adapter<ResultAdapter.ViewHolder>() {
 
     /**
@@ -67,7 +69,7 @@ class ResultAdapter(
         viewHolder.synonymsTranslationTextView.text = "Синонимы: ${resultViewItem.synonymsTranslation}"
 
         viewHolder.root.setOnClickListener {
-            clickListener(result.definition)
+            clickListener()
 
 
         }
@@ -85,4 +87,6 @@ class ResultAdapter(
         dataSet.add(item)
         notifyDataSetChanged()
     }
+
+
 }

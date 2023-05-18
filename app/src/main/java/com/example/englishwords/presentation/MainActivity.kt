@@ -1,7 +1,10 @@
 package com.example.englishwords.presentation
 
+import android.app.Activity
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -26,7 +29,9 @@ class MainActivity : AppCompatActivity() {
 
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         val adapter = ResultAdapter(mutableListOf()) {
-            Snackbar.make(root, it, Snackbar.LENGTH_LONG).show()
+            val intent = Intent(this, TestActivity::class.java)
+            startActivity(intent)
+
         }
         recyclerView.adapter = adapter
 
@@ -42,7 +47,9 @@ class MainActivity : AppCompatActivity() {
                         translatorRepository.getTranslation(result.partOfSpeech) { partOfSpeechTranslation ->
                             val partOfSpeechTranslationField = partOfSpeechTranslation.orEmpty()
 
-                            translatorRepository.getTranslation(result.synonyms?.joinToString(". ") ?: "there is no synonyms") { synonymsTranslation ->
+                            translatorRepository.getTranslation(
+                                result.synonyms?.joinToString(". ") ?: "there is no synonyms"
+                            ) { synonymsTranslation ->
                                 val synonymsTranslationField = synonymsTranslation.orEmpty()
 
                                 val resultViewItem = ResultViewItem(
@@ -53,12 +60,13 @@ class MainActivity : AppCompatActivity() {
                                     synonyms = result.synonyms?.joinToString(". ").orEmpty(),
                                     synonymsTranslation = synonymsTranslationField,
                                 )
-                                recyclerView.post{ adapter.setDataItem(resultViewItem) }
+                                recyclerView.post { adapter.setDataItem(resultViewItem) }
                             }
                         }
                     }
                 }
             }
         }
+
     }
 }
