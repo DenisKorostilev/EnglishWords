@@ -1,6 +1,8 @@
 package com.example.englishwords.data
 
 import android.util.Log
+import com.example.englishwords.presentation.TranslateDTO
+import com.google.gson.Gson
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -8,7 +10,7 @@ import org.json.JSONObject
 import java.io.IOException
 
 class TranslatorRepository {
-    fun getTranslation(text: String, callback : (String)->Unit) {
+    fun getTranslation(text: String, callback : (String?) -> Unit) {
         val client = OkHttpClient()
 
         val body = JSONObject()
@@ -33,7 +35,8 @@ class TranslatorRepository {
 
             override fun onResponse(call: Call, response: Response) {
                 val body = response.body?.string()
-                Log.d("test", "Проверка: $body")
+                val translation = Gson().fromJson(body, TranslateDTO::class.java)
+                callback(translation.text)
             }
 
         })

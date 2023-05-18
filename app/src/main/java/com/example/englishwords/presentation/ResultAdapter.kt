@@ -9,7 +9,7 @@ import com.example.englishwords.R
 import com.google.android.material.card.MaterialCardView
 
 class ResultAdapter(
-    private var dataSet: List<ResultViewItem>,
+    private var dataSet: MutableList<ResultViewItem>,
     private val clickListener: (definition: String) -> Unit
 ) :
     RecyclerView.Adapter<ResultAdapter.ViewHolder>() {
@@ -60,13 +60,11 @@ class ResultAdapter(
 
         viewHolder.definitionTextView.text = "Definition: ${result.definition}"
         viewHolder.partOfSpeechTextView.text = "PartOfSpeech: ${result.partOfSpeech}"
-        viewHolder.synonymsTextView.text =
-            "Synonyms: ${result.synonyms?.joinToString(separator = ", ")}"
+        viewHolder.synonymsTextView.text = "Synonyms: ${result.synonyms}"
 
         viewHolder.definitionTranslationTextView.text = "Определение: ${resultViewItem.definitionTranslation}"
         viewHolder.partOfSpeechTranslationTextView.text = "Часть речи: ${resultViewItem.partOfSpeechTranslation}"
-        viewHolder.synonymsTranslationTextView.text =
-            "Синонимы: ${resultViewItem.synonymsTranslation?.joinToString(separator = ", ")}"
+        viewHolder.synonymsTranslationTextView.text = "Синонимы: ${resultViewItem.synonymsTranslation}"
 
         viewHolder.root.setOnClickListener {
             clickListener(result.definition)
@@ -78,8 +76,13 @@ class ResultAdapter(
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.size
 
-    fun setData(dataSet: List<ResultViewItem>) {
-        this.dataSet = dataSet
+    fun clearData() {
+        dataSet.clear()
+        notifyDataSetChanged()
+    }
+
+    fun setDataItem(item: ResultViewItem) {
+        dataSet.add(item)
         notifyDataSetChanged()
     }
 }

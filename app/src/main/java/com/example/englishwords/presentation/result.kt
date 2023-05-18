@@ -17,12 +17,12 @@ data class ResultDTO(
 )
 
 data class ResultViewItem(
-    val definition: String,
-    val definitionTranslation: String,
-    val partOfSpeech: String,
-    val partOfSpeechTranslation: String,
-    val synonyms: List<String>?,
-    val synonymsTranslation: List<String>?,
+    var definition: String,
+    var definitionTranslation: String,
+    var partOfSpeech: String,
+    var partOfSpeechTranslation: String,
+    var synonyms: String,
+    var synonymsTranslation: String,
 )
 
 
