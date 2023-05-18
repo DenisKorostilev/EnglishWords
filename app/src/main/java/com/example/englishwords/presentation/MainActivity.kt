@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         val adapter = ResultAdapter(mutableListOf()) { resultViewItem ->
             val intent = Intent(this, TestActivity::class.java)
-            intent.putExtra(bundleOf())
+//                intent.putExtra(bundleOf())
             intent.putExtra(DEFINITION_KEY, resultViewItem.definition)
             intent.putExtra(PART_OF_SPEECH_KEY, resultViewItem.partOfSpeech)
             intent.putExtra(SYNONYMS_KEY, resultViewItem.synonyms)
