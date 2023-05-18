@@ -8,7 +8,7 @@ import org.json.JSONObject
 import java.io.IOException
 
 class TranslatorRepository {
-    fun getTranslation(text: String) {
+    fun getTranslation(text: String, callback : (String)->Unit) {
         val client = OkHttpClient()
 
         val body = JSONObject()

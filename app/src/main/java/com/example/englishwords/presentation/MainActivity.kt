@@ -14,6 +14,8 @@ import com.google.android.material.snackbar.Snackbar
 class MainActivity : AppCompatActivity() {
 
     private val useCase: WordUseCase = WordUseCase()
+    private val translatorRepository = TranslatorRepository()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -33,8 +35,14 @@ class MainActivity : AppCompatActivity() {
         button.setOnClickListener {
 
             useCase.getWordData(editText.text.toString()) { root: RootDTO ->
-                //recyclerView.post {
-                    //adapter.setData(root.results)
+                translatorRepository.getTranslation(root.results[0].definition)
+                root.results.forEach{
+                    translatorRepository.getTranslation(it.definition){
+
+                    }
+                }
+//                recyclerView.post {
+//                    adapter.setData(root.results)
 //                }
             }
         }
