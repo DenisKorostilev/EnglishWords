@@ -36,23 +36,23 @@ class MainActivity : AppCompatActivity() {
 
             wordsRepository.getWordData(editText.text.toString()) { results: List<ResultDTO> ->
                 results.forEach { result ->
-                    val resultViewItem = ResultViewItem(
-                        definition = result.definition,
-                        definitionTranslation = "",
-                        partOfSpeech = result.partOfSpeech,
-                        partOfSpeechTranslation = "",
-                        synonyms = result.synonyms?.joinToString(". ").orEmpty(),
-                        synonymsTranslation = "",
-                    )
                     translatorRepository.getTranslation(result.definition) { definitionTranslation ->
-                        resultViewItem.definitionTranslation = definitionTranslation.orEmpty()
+                        val definitionTranslationField = definitionTranslation.orEmpty()
 
                         translatorRepository.getTranslation(result.partOfSpeech) { partOfSpeechTranslation ->
-                            resultViewItem.partOfSpeechTranslation = partOfSpeechTranslation.orEmpty()
+                            val partOfSpeechTranslationField = partOfSpeechTranslation.orEmpty()
 
                             translatorRepository.getTranslation(result.synonyms?.joinToString(". ") ?: "there is no synonyms") { synonymsTranslation ->
-                                resultViewItem.synonymsTranslation = synonymsTranslation.orEmpty()
+                                val synonymsTranslationField = synonymsTranslation.orEmpty()
 
+                                val resultViewItem = ResultViewItem(
+                                    definition = result.definition,
+                                    definitionTranslation = definitionTranslationField,
+                                    partOfSpeech = result.partOfSpeech,
+                                    partOfSpeechTranslation = partOfSpeechTranslationField,
+                                    synonyms = result.synonyms?.joinToString(". ").orEmpty(),
+                                    synonymsTranslation = synonymsTranslationField,
+                                )
                                 recyclerView.post{ adapter.setDataItem(resultViewItem) }
                             }
                         }
