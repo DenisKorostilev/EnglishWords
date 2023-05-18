@@ -7,6 +7,7 @@ import android.widget.EditText
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.englishwords.R
+import com.example.englishwords.data.TranslatorRepository
 import com.example.englishwords.domain.WordUseCase
 import com.google.android.material.snackbar.Snackbar
 
@@ -17,6 +18,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        TranslatorRepository().getTranslation("food")
         val root = findViewById<ConstraintLayout>(R.id.root)
         val editText = findViewById<EditText>(R.id.editText)
         val button = findViewById<Button>(R.id.button)
@@ -29,12 +31,14 @@ class MainActivity : AppCompatActivity() {
 
 
         button.setOnClickListener {
-            useCase.getWordData(editText.text.toString()) { root ->
+            val callBack: (Root) -> Unit  = { root: Root ->
                 recyclerView.post {
                     adapter.setData(root.results)
                 }
             }
+            useCase.getWordData(editText.text.toString(), callBack)
         }
+
 
     }
 }
