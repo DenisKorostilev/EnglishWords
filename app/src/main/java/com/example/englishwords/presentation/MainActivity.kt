@@ -3,9 +3,6 @@ package com.example.englishwords.presentation
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.os.HandlerThread
-import android.os.Looper
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.englishwords.R
 import com.example.englishwords.data.TranslatorRepository

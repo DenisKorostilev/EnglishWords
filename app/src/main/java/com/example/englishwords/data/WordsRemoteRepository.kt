@@ -3,11 +3,12 @@ package com.example.englishwords.data
 import com.example.englishwords.presentation.ResultDTO
 import com.example.englishwords.presentation.RootDTO
 import com.google.gson.Gson
+import com.google.gson.stream.JsonReader
 import okhttp3.*
+import java.io.FileReader
 import java.io.IOException
 
 class WordsRemoteRepository {
-    private val translatorRepository = TranslatorRepository()
     fun getWordData(word: String, callBack: (List<ResultDTO>) -> Unit) {
         val client = OkHttpClient()
 
@@ -30,4 +31,51 @@ class WordsRemoteRepository {
 
         })
     }
+
+//    fun getWordData(word: String, callBack: (List<ResultDTO>) -> Unit) {
+//        val result = Gson().fromJson(response, RootDTO::class.java)
+//        callBack(result.results)
+//    }
+
+    private val response = """
+        {
+          "word": "hatchback",
+          "results": [
+            {
+              "definition": "a sloping rear car door that is lifted to open",
+              "partOfSpeech": "noun",
+              "synonyms": [
+                "hatch",
+                "hatchback door",
+                "liftgate"
+              ],
+              "typeOf": [
+                "car door"
+              ]
+            },
+            {
+              "definition": "a car having a hatchback door",
+              "partOfSpeech": "noun",
+              "typeOf": [
+                "auto",
+                "automobile",
+                "car",
+                "machine",
+                "motorcar"
+              ]
+            }
+          ],
+          "syllables": {
+            "count": 2,
+            "list": [
+              "hatch",
+              "back"
+            ]
+          },
+          "pronunciation": {
+            "all": "'hætʃbæk"
+          },
+          "frequency": 1.97
+        }
+    """.trimIndent()
 }
