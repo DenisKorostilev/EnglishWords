@@ -3,6 +3,9 @@ package com.example.englishwords.presentation
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.HandlerThread
+import android.os.Looper
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.englishwords.R
 import com.example.englishwords.data.TranslatorRepository
@@ -12,7 +15,7 @@ import com.example.englishwords.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
-    private var binding: ActivityMainBinding by viewBinding ()
+    private val binding: ActivityMainBinding by viewBinding()
     private val wordsRepository = WordsRemoteRepository()
     private val translatorRepository = TranslatorRepository()
 
@@ -27,14 +30,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
 
-        val editText = binding.editText
-        val button = binding.button
-
-        val recyclerView = binding.recyclerView
         val adapter = ResultAdapter(mutableListOf()) { resultViewItem ->
             val intent = Intent(this, TestActivity::class.java)
 //            intent.putExtra(bundleOf())
@@ -47,13 +45,13 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             startActivity(intent)
 
         }
-        recyclerView.adapter = adapter
+        binding.recyclerView.adapter = adapter
 
 
-        button.setOnClickListener {
+        binding.button.setOnClickListener {
             adapter.clearData()
 
-            wordsRepository.getWordData(editText.toString()) { results: List<ResultDTO> ->
+            wordsRepository.getWordData(binding.editText.text.toString()) { results: List<ResultDTO> ->
                 results.forEach { result ->
                     translatorRepository.getTranslation(result.definition) { definitionTranslation ->
                         val definitionTranslationField = definitionTranslation.orEmpty()
@@ -74,7 +72,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                                     synonyms = result.synonyms?.joinToString(". ").orEmpty(),
                                     synonymsTranslation = synonymsTranslationField,
                                 )
-                                recyclerView.post { adapter.setDataItem(resultViewItem) }
+                                runOnUiThread { adapter.setDataItem(resultViewItem) }
                             }
                         }
                     }
