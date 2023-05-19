@@ -19,13 +19,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private val wordsRepository = WordsRemoteRepository()
     private val translatorRepository = TranslatorRepository()
 
-    companion object {
-        const val DEFINITION_KEY = "DEFINITION_KEY"
-        const val DEFINITION_TRANSLATION_KEY = "DEFINITION_TRANSLATION_KEY"
-        const val PART_OF_SPEECH_KEY = "PATROFSPEECH_KEY"
-        const val PART_OF_SPEECH_TRANSLATION_KEY = "PART_OF_SPEECH_TRANSLATION_KEY"
-        const val SYNONYMS_KEY = "SYNONYMS_KEY"
-        const val SYNONYMS_TRANSLATION_KEY = "SYNONYMS_TRANSLATION_KEY"
+    companion object Keys {
+        const val RESULT_VIEW_ITEM_KEY = "RESULT_VIEW_ITEM_KEY"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,13 +30,13 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
         val adapter = ResultAdapter(mutableListOf()) { resultViewItem ->
             val intent = Intent(this, TestActivity::class.java)
-//            intent.putExtra(bundleOf())
-            intent.putExtra(DEFINITION_KEY, resultViewItem.definition)
-            intent.putExtra(PART_OF_SPEECH_KEY, resultViewItem.partOfSpeech)
-            intent.putExtra(SYNONYMS_KEY, resultViewItem.synonyms)
-            intent.putExtra(DEFINITION_TRANSLATION_KEY, resultViewItem.definitionTranslation)
-            intent.putExtra(PART_OF_SPEECH_TRANSLATION_KEY, resultViewItem.partOfSpeechTranslation)
-            intent.putExtra(SYNONYMS_TRANSLATION_KEY, resultViewItem.synonymsTranslation)
+            intent.putExtra(RESULT_VIEW_ITEM_KEY,resultViewItem )
+//            intent.putExtra(DEFINITION_KEY, resultViewItem.definition)
+//            intent.putExtra(PART_OF_SPEECH_KEY, resultViewItem.partOfSpeech)
+//            intent.putExtra(SYNONYMS_KEY, resultViewItem.synonyms)
+//            intent.putExtra(DEFINITION_TRANSLATION_KEY, resultViewItem.definitionTranslation)
+//            intent.putExtra(PART_OF_SPEECH_TRANSLATION_KEY, resultViewItem.partOfSpeechTranslation)
+//            intent.putExtra(SYNONYMS_TRANSLATION_KEY, resultViewItem.synonymsTranslation)
             startActivity(intent)
 
         }
