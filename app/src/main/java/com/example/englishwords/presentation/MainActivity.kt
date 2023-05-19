@@ -1,22 +1,18 @@
 package com.example.englishwords.presentation
 
-import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.os.bundleOf
-import androidx.recyclerview.widget.RecyclerView
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.englishwords.R
 import com.example.englishwords.data.TranslatorRepository
 import com.example.englishwords.data.WordsRemoteRepository
-import com.google.android.material.snackbar.Snackbar
+import com.example.englishwords.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
 
+class MainActivity : AppCompatActivity(R.layout.activity_main) {
+
+    private var binding: ActivityMainBinding by viewBinding ()
     private val wordsRepository = WordsRemoteRepository()
     private val translatorRepository = TranslatorRepository()
 
@@ -31,16 +27,17 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
 
-        val editText = findViewById<EditText>(R.id.editText)
-        val button = findViewById<Button>(R.id.button)
+        val editText = binding.editText
+        val button = binding.button
 
-        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
+        val recyclerView = binding.recyclerView
         val adapter = ResultAdapter(mutableListOf()) { resultViewItem ->
             val intent = Intent(this, TestActivity::class.java)
-            intent.putExtra(bundleOf())
+//            intent.putExtra(bundleOf())
             intent.putExtra(DEFINITION_KEY, resultViewItem.definition)
             intent.putExtra(PART_OF_SPEECH_KEY, resultViewItem.partOfSpeech)
             intent.putExtra(SYNONYMS_KEY, resultViewItem.synonyms)
@@ -56,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         button.setOnClickListener {
             adapter.clearData()
 
-            wordsRepository.getWordData(editText.text.toString()) { results: List<ResultDTO> ->
+            wordsRepository.getWordData(editText.toString()) { results: List<ResultDTO> ->
                 results.forEach { result ->
                     translatorRepository.getTranslation(result.definition) { definitionTranslation ->
                         val definitionTranslationField = definitionTranslation.orEmpty()
