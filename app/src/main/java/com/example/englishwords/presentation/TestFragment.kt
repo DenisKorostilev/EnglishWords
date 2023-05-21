@@ -7,8 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.englishwords.R
 import com.example.englishwords.databinding.FragmentTestBinding
+import com.example.englishwords.presentation.ContentFragment.Keys.RESULT_VIEW_ITEM_KEY
 
-class TestFragment: Fragment(R.layout.fragment_test) {
+class TestFragment : Fragment(R.layout.fragment_test) {
     private var _binding: FragmentTestBinding? = null
     private val binding get() = _binding!!
 
@@ -20,9 +21,10 @@ class TestFragment: Fragment(R.layout.fragment_test) {
         _binding = FragmentTestBinding.inflate(inflater, container, false)
         return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val resultViewItem = this.activity?.intent?.extras?.getParcelable<ResultViewItem>(MainActivity.RESULT_VIEW_ITEM_KEY)
+        val resultViewItem = arguments?.getParcelable<ResultViewItem>(RESULT_VIEW_ITEM_KEY)
         binding.definitionTextView.text = resultViewItem?.definition
         binding.definitionTranslationTextView.text = resultViewItem?.definitionTranslation
         binding.partOfSpeechTextView.text = resultViewItem?.partOfSpeech

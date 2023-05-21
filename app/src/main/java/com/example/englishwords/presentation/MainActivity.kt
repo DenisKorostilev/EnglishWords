@@ -10,10 +10,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private val binding: ActivityMainBinding by viewBinding()
 
-    companion object Keys {
-        const val RESULT_VIEW_ITEM_KEY = "RESULT_VIEW_ITEM_KEY"
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
