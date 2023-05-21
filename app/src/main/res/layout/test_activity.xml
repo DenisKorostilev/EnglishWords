@@ -1,63 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.fragment.app.FragmentContainerView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_container_view"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginHorizontal="16dp"
-    android:layout_marginTop="16dp"
-    android:id="@+id/root"
-    android:clickable="true"
-    android:focusable="true"
-    app:cardCornerRadius="12dp"
-    app:cardElevation="15dp">
-
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
-
-        <TextView
-            android:id="@+id/definitionTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="Definition:" />
-        <TextView
-            android:id="@+id/definitionTranslationTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            tools:text="Определение:" />
-
-        <TextView
-            android:id="@+id/partOfSpeechTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            tools:text="PartOfSpeech:" />
-        <TextView
-            android:id="@+id/partOfSpeechTranslationTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            tools:text="Часть речи:" />
-
-        <TextView
-            android:id="@+id/synonymsTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            tools:text="Synonyms:" />
-
-        <TextView
-            android:id="@+id/synonymsTranslationTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            tools:text="Синонимы:" />
-
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-</com.google.android.material.card.MaterialCardView>
+    android:layout_height="match_parent"
+    android:name="com.example.englishwords.presentation.TestFragment" />
