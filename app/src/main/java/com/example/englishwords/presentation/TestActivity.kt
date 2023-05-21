@@ -22,5 +22,4 @@ class TestActivity : AppCompatActivity(R.layout.test_activity) {
         binding.synonymsTextView.text = resultViewItem?.synonyms
         binding.synonymsTranslationTextView.text = resultViewItem?.synonymsTranslation
     }
-
 }
