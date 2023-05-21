@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.englishwords.R
 import com.example.englishwords.data.TranslatorRepository
 import com.example.englishwords.data.WordsRemoteRepository
@@ -13,22 +14,12 @@ import com.example.englishwords.databinding.FragmentContentBinding
 
 class ContentFragment : Fragment(R.layout.fragment_content) {
 
-    private var _binding: FragmentContentBinding? = null
-    private val binding get() = _binding!!
+    private val binding: FragmentContentBinding by viewBinding()
     private val wordsRepository = WordsRemoteRepository()
     private val translatorRepository = TranslatorRepository()
 
     companion object Keys {
         const val RESULT_VIEW_ITEM_KEY = "RESULT_VIEW_ITEM_KEY"
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentContentBinding.inflate(inflater, container, false)
-        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -74,10 +65,5 @@ class ContentFragment : Fragment(R.layout.fragment_content) {
                 }
             }
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
     }
 }
