@@ -75,4 +75,9 @@ class ResultAdapter(
         dataSet.add(item)
         notifyDataSetChanged()
     }
+
+    fun setData(items: List<ResultViewItem>) {
+        dataSet.clear()
+        dataSet.addAll(items)
+    }
 }
