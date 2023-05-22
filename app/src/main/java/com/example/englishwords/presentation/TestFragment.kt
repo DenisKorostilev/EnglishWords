@@ -5,31 +5,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.englishwords.R
 import com.example.englishwords.databinding.FragmentTestBinding
 import com.example.englishwords.presentation.ContentFragment.Keys.RESULT_VIEW_ITEM_KEY
 
 class TestFragment : Fragment(R.layout.fragment_test) {
-    private var _binding: FragmentTestBinding? = null
-    private val binding get() = _binding!!
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentTestBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+    private val binding: FragmentTestBinding by viewBinding()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val resultViewItem = arguments?.getParcelable<ResultViewItem>(RESULT_VIEW_ITEM_KEY)
-        binding.definitionTextView.text = resultViewItem?.definition
-        binding.definitionTranslationTextView.text = resultViewItem?.definitionTranslation
-        binding.partOfSpeechTextView.text = resultViewItem?.partOfSpeech
-        binding.partOfSpeechTranslationTextView.text = resultViewItem?.partOfSpeechTranslation
-        binding.synonymsTextView.text = resultViewItem?.synonyms
-        binding.synonymsTranslationTextView.text = resultViewItem?.synonymsTranslation
+
+        with(binding) {
+            definitionTextView.text = resultViewItem?.definition
+            definitionTranslationTextView.text = resultViewItem?.definitionTranslation
+            partOfSpeechTextView.text = resultViewItem?.partOfSpeech
+            partOfSpeechTranslationTextView.text = resultViewItem?.partOfSpeechTranslation
+            synonymsTextView.text = resultViewItem?.synonyms
+            synonymsTranslationTextView.text = resultViewItem?.synonymsTranslation
+        }
     }
 }
