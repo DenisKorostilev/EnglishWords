@@ -37,8 +37,6 @@ class ContentViewModel : ViewModel() {
                                 synonyms = result.synonyms?.joinToString(". ").orEmpty(),
                                 synonymsTranslation = synonymsTranslationField,
                             )
-//                            activity?.runOnUiThread { adapter.setDataItem(resultViewItem) }
-
                             _resultViewItems.postValue(resultViewItem)
                         }
                     }
