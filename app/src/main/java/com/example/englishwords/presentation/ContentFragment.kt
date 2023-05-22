@@ -43,8 +43,7 @@ class ContentFragment : Fragment(R.layout.fragment_content) {
         }
 
         viewModel.resultViewItems.observe(viewLifecycleOwner) {
-            adapter.setData(it)
+            if (it != null) adapter.setDataItem(it)
         }
-
     }
 }

@@ -11,8 +11,8 @@ class ContentViewModel : ViewModel() {
     private val wordsRepository = WordsRemoteRepository()
     private val translatorRepository = TranslatorRepository()
 
-    private val _resultViewItems = MutableLiveData<List<ResultViewItem>>()
-    val resultViewItems: LiveData<List<ResultViewItem>> = _resultViewItems
+    private val _resultViewItems = MutableLiveData<ResultViewItem?>()
+    val resultViewItems: LiveData<ResultViewItem?> = _resultViewItems
 
     fun receiveResults(text: String) {
 
@@ -39,8 +39,7 @@ class ContentViewModel : ViewModel() {
                             )
 //                            activity?.runOnUiThread { adapter.setDataItem(resultViewItem) }
 
-                            val items = _resultViewItems.value ?: emptyList()
-                            _resultViewItems.postValue(items + resultViewItem)
+                            _resultViewItems.postValue(resultViewItem)
                         }
                     }
                 }
