@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.englishwords.data.TranslatorRepository
 import com.example.englishwords.data.WordsRemoteRepository
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 class ContentViewModel : ViewModel() {
@@ -21,18 +22,22 @@ class ContentViewModel : ViewModel() {
             val results = wordsRepository.getWordData(text)
 
             results.forEach { result ->
-                val definitionTranslation = translatorRepository.getTranslation(result.definition)
+                val definitionTranslation =
+                    async { translatorRepository.getTranslation(result.definition) }
                 val partOfSpeechTranslation =
-                    translatorRepository.getTranslation(result.partOfSpeech)
+                    async { translatorRepository.getTranslation(result.partOfSpeech) }
                 val synonymsTranslation =
-                    translatorRepository.getTranslation(result.synonyms?.joinToString(". ") ?: "there is no synonyms")
+                    async {
+                        translatorRepository.getTranslation(
+                            result.synonyms?.joinToString(". ") ?: "there is no synonyms")
+                    }
                 val resultViewItem = ResultViewItem(
                     definition = result.definition,
-                    definitionTranslation = definitionTranslation,
+                    definitionTranslation = definitionTranslation.await(),
                     partOfSpeech = result.partOfSpeech,
-                    partOfSpeechTranslation = partOfSpeechTranslation,
+                    partOfSpeechTranslation = partOfSpeechTranslation.await(),
                     synonyms = result.synonyms?.joinToString(". ").orEmpty(),
-                    synonymsTranslation = synonymsTranslation,
+                    synonymsTranslation = synonymsTranslation.await(),
                 )
                 _resultViewItems.postValue(resultViewItem)
 
