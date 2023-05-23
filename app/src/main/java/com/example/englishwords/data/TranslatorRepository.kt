@@ -18,7 +18,6 @@ class TranslatorRepository {
             if (body != null) {
                 return body.text
             }
-
         }
         return ""
     }
