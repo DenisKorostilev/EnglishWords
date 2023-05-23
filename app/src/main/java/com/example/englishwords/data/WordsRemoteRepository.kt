@@ -24,10 +24,6 @@ class WordsRemoteRepository {
                     callBack(body.results)
                 }
             }
-
         }
-
-
     }
-
 }

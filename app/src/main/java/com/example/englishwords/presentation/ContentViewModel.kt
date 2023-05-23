@@ -43,6 +43,5 @@ class ContentViewModel : ViewModel() {
                 }
             }
         }
-
     }
 }

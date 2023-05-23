@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 object RetrofitWord {
-    val baseUrl = "https://wordsapiv1.p.rapidapi.com/"
+    private const val baseUrl = "https://wordsapiv1.p.rapidapi.com/"
 
     fun getInstance(): Retrofit {
         val clientBuilder = OkHttpClient.Builder()
