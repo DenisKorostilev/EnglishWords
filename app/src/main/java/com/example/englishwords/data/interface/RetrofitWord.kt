@@ -6,7 +6,6 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-
 object RetrofitWord {
     private const val baseUrl = "https://wordsapiv1.p.rapidapi.com/"
 
