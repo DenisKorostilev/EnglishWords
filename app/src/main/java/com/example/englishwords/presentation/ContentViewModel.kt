@@ -3,8 +3,10 @@ package com.example.englishwords.presentation
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.englishwords.data.TranslatorRepository
 import com.example.englishwords.data.WordsRemoteRepository
+import kotlinx.coroutines.launch
 
 class ContentViewModel : ViewModel() {
 
@@ -15,8 +17,8 @@ class ContentViewModel : ViewModel() {
     val resultViewItems: LiveData<ResultViewItem?> = _resultViewItems
 
     fun receiveResults(text: String) {
-
-        wordsRepository.getWordData(text) { results: List<ResultDTO> ->
+        viewModelScope.launch {
+            val results = wordsRepository.getWordData(text)
             results.forEach { result ->
                 translatorRepository.getTranslation(result.definition) { definitionTranslation ->
                     val definitionTranslationField = definitionTranslation.orEmpty()
@@ -43,6 +45,5 @@ class ContentViewModel : ViewModel() {
                 }
             }
         }
-
     }
 }
