@@ -16,7 +16,6 @@ class ContentViewModel : ViewModel() {
 
     private val _resultViewItems = MutableLiveData<ResultViewItem?>()
     val resultViewItems: LiveData<ResultViewItem?> = _resultViewItems
-
     fun receiveResults(text: String) {
         viewModelScope.launch {
             val results = wordsRepository.getWordData(text)
