@@ -16,18 +16,21 @@ class ContentViewModel : ViewModel() {
 
     private val _resultViewItems = MutableLiveData<ResultViewItem?>()
     val resultViewItems: LiveData<ResultViewItem?> = _resultViewItems
+
     fun receiveResults(text: String) {
         viewModelScope.launch {
             val results = wordsRepository.getWordData(text)
 
             results.forEach { result ->
-                val definitionTranslation = async {translatorRepository.getTranslation(result.definition)}
+                val definitionTranslation =
+                    async { translatorRepository.getTranslation(result.definition) }
                 val partOfSpeechTranslation =
-                    async{translatorRepository.getTranslation(result.partOfSpeech)}
+                    async { translatorRepository.getTranslation(result.partOfSpeech) }
                 val synonymsTranslation =
-                    async  {translatorRepository.getTranslation(
-                        result.synonyms?.joinToString(". ") ?: "there is no synonyms"
-                    )}
+                    async {
+                        translatorRepository.getTranslation(
+                            result.synonyms?.joinToString(". ") ?: "there is no synonyms")
+                    }
                 val resultViewItem = ResultViewItem(
                     definition = result.definition,
                     definitionTranslation = definitionTranslation.await(),
@@ -37,6 +40,7 @@ class ContentViewModel : ViewModel() {
                     synonymsTranslation = synonymsTranslation.await(),
                 )
                 _resultViewItems.postValue(resultViewItem)
+
             }
         }
     }
