@@ -8,7 +8,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 object RetrofitWord {
     private const val wordsBaseUrl = "https://wordsapiv1.p.rapidapi.com/"
     private const val wordsTranslateBaseUrl = "https://deepl-translator.p.rapidapi.com/"
-
     fun getWordsInstance(): Retrofit {
         return Retrofit.Builder()
             .baseUrl(wordsBaseUrl)

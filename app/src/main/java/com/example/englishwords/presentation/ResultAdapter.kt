@@ -1,6 +1,5 @@
 package com.example.englishwords.presentation
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,10 +19,10 @@ class ResultAdapter(
         val definitionTextView: TextView
         val partOfSpeechTextView: TextView
         val synonymsTextView: TextView
-
         val definitionTranslationTextView: TextView
         val partOfSpeechTranslationTextView: TextView
         val synonymsTranslationTextView: TextView
+
 
         val root: MaterialCardView
 
@@ -42,14 +41,11 @@ class ResultAdapter(
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.result_item, viewGroup, false)
-
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-
         val resultViewItem = dataSet[position]
-
         viewHolder.definitionTextView.text = "Definition: ${resultViewItem.definition}"
         viewHolder.partOfSpeechTextView.text = "PartOfSpeech: ${resultViewItem.partOfSpeech}"
         viewHolder.synonymsTextView.text = "Synonyms: ${resultViewItem.synonyms}"
