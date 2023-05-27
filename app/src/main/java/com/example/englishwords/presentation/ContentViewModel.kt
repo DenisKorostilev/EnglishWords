@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.englishwords.data.TranslatorRepository
 import com.example.englishwords.data.WordsRemoteRepository
 import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 
 class ContentViewModel : ViewModel() {
@@ -20,28 +21,29 @@ class ContentViewModel : ViewModel() {
 
         viewModelScope.launch {
             val results = wordsRepository.getWordData(text)
-            results.forEach { result ->
-                val definitionTranslation =
-                    async { translatorRepository.getTranslation(result.definition) }
-                val partOfSpeechTranslation =
-                    async { translatorRepository.getTranslation(result.partOfSpeech) }
-                val synonymsTranslation =
-                    async {
+            results.map { result ->
+                async {
+                    val definitionTranslation =
+                        translatorRepository.getTranslation(result.definition)
+                    val partOfSpeechTranslation =
+                        translatorRepository.getTranslation(result.partOfSpeech)
+                    val synonymsTranslation =
+
                         translatorRepository.getTranslation(
                             result.synonyms?.joinToString(". ") ?: "there is no synonyms"
                         )
-                    }
 
-                val resultViewItem = ResultViewItem(
-                    definition = result.definition,
-                    definitionTranslation = definitionTranslation.await(),
-                    partOfSpeech = result.partOfSpeech,
-                    partOfSpeechTranslation = partOfSpeechTranslation.await(),
-                    synonyms = result.synonyms?.joinToString(". ").orEmpty(),
-                    synonymsTranslation = synonymsTranslation.await()
-                )
-                _resultViewItems.postValue(resultViewItem)
-            }
+                    val resultViewItem = ResultViewItem(
+                        definition = result.definition,
+                        definitionTranslation = definitionTranslation,
+                        partOfSpeech = result.partOfSpeech,
+                        partOfSpeechTranslation = partOfSpeechTranslation,
+                        synonyms = result.synonyms?.joinToString(". ").orEmpty(),
+                        synonymsTranslation = synonymsTranslation
+                    )
+                    _resultViewItems.postValue(resultViewItem)
+                }
+            }.awaitAll()
         }
     }
 }
