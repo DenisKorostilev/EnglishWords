@@ -67,12 +67,12 @@ class ResultAdapter(
         notifyDataSetChanged()
     }
 
-    fun setDataItem(item: ResultViewItem) {
-        dataSet.add(item)
+    fun setDataItem(item: List<ResultViewItem>) {
+        dataSet.addAll(item)
         notifyDataSetChanged()
     }
 
-    fun setData(items: List<ResultViewItem>) {
+    fun setData(items:  List<ResultViewItem>) {
         dataSet.clear()
         dataSet.addAll(items)
         notifyDataSetChanged()

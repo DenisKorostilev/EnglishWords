@@ -9,19 +9,20 @@ import com.example.englishwords.data.WordsRemoteRepository
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
+import okhttp3.internal.notifyAll
 
 class ContentViewModel : ViewModel() {
 
     private val wordsRepository = WordsRemoteRepository()
     private val translatorRepository = TranslatorRepository()
-    private val _resultViewItems = MutableLiveData<ResultViewItem?>()
-    val resultViewItems: LiveData<ResultViewItem?> = _resultViewItems
+    private val _resultViewItems = MutableLiveData<List<ResultViewItem>>()
+    val resultViewItems: LiveData<List<ResultViewItem>> = _resultViewItems
 
     fun receiveResults(text: String) {
 
         viewModelScope.launch {
             val results = wordsRepository.getWordData(text)
-            results.map { result ->
+            val resultViewItems = results.map { result ->
                 async {
                     val definitionTranslation =
                         translatorRepository.getTranslation(result.definition)
@@ -33,7 +34,7 @@ class ContentViewModel : ViewModel() {
                             result.synonyms?.joinToString(". ") ?: "there is no synonyms"
                         )
 
-                    val resultViewItem = ResultViewItem(
+                    ResultViewItem(
                         definition = result.definition,
                         definitionTranslation = definitionTranslation,
                         partOfSpeech = result.partOfSpeech,
@@ -41,9 +42,9 @@ class ContentViewModel : ViewModel() {
                         synonyms = result.synonyms?.joinToString(". ").orEmpty(),
                         synonymsTranslation = synonymsTranslation
                     )
-                    _resultViewItems.postValue(resultViewItem)
                 }
             }.awaitAll()
+            _resultViewItems.postValue(resultViewItems)
         }
     }
 }
