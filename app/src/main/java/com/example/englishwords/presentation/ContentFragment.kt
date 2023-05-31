@@ -7,6 +7,7 @@ import android.view.View.VISIBLE
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.englishwords.R
 import com.example.englishwords.databinding.FragmentContentBinding
@@ -27,23 +28,24 @@ class ContentFragment : Fragment(R.layout.fragment_content) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
         bindViews()
+
     }
 
     private fun initViews() {
         with(binding) {
             recyclerView.adapter = adapter
             button.setOnClickListener {
-                progressBar.visibility = VISIBLE
                 adapter.clearData()
                 viewModel.receiveResults(binding.editText.text.toString())
             }
         }
     }
 
+
     private fun bindViews() {
         viewModel.resultViewItems.observe(viewLifecycleOwner) {
             adapter.setDataItem(it)
-            binding.progressBar.visibility = INVISIBLE
+            binding.swipeContainer.isRefreshing = true
         }
     }
 
