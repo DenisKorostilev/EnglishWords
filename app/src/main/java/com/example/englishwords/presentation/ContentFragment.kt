@@ -35,22 +35,23 @@ class ContentFragment : Fragment(R.layout.fragment_content) {
         with(binding) {
             recyclerView.adapter = adapter
             button.setOnClickListener {
-                adapter.clearData()
-                viewModel.receiveResults(binding.editText.text.toString())
+                incomingRequests()
             }
-            swipeContainer.setOnRefreshListener {
-                adapter.clearData()
-                viewModel.receiveResults(binding.editText.text.toString())
-                swipeContainer.isRefreshing = true
+            swipeRefreshLayout.setOnRefreshListener {
+                incomingRequests()
+                swipeRefreshLayout.isRefreshing = true
             }
         }
     }
-
+    private fun incomingRequests (){
+        adapter.clearData()
+        viewModel.receiveResults(binding.editText.text.toString())
+    }
 
     private fun bindViews() {
         viewModel.resultViewItems.observe(viewLifecycleOwner) {
             adapter.setDataItem(it)
-            binding.swipeContainer.isRefreshing = false
+            binding.swipeRefreshLayout.isRefreshing = false
         }
     }
 
