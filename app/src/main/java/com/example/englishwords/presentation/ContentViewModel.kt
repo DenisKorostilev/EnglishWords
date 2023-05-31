@@ -25,22 +25,24 @@ class ContentViewModel : ViewModel() {
             val resultViewItems = results.map { result ->
                 async {
                     val definitionTranslation =
-                        translatorRepository.getTranslation(result.definition)
+                        async { translatorRepository.getTranslation(result.definition) }
                     val partOfSpeechTranslation =
-                        translatorRepository.getTranslation(result.partOfSpeech)
+                        async { translatorRepository.getTranslation(result.partOfSpeech) }
                     val synonymsTranslation =
 
-                        translatorRepository.getTranslation(
-                            result.synonyms?.joinToString(". ") ?: "there is no synonyms"
-                        )
+                        async {
+                            translatorRepository.getTranslation(
+                                result.synonyms?.joinToString(". ") ?: "there is no synonyms"
+                            )
+                        }
 
                     ResultViewItem(
                         definition = result.definition,
-                        definitionTranslation = definitionTranslation,
+                        definitionTranslation = definitionTranslation.await(),
                         partOfSpeech = result.partOfSpeech,
-                        partOfSpeechTranslation = partOfSpeechTranslation,
+                        partOfSpeechTranslation = partOfSpeechTranslation.await(),
                         synonyms = result.synonyms?.joinToString(". ").orEmpty(),
-                        synonymsTranslation = synonymsTranslation
+                        synonymsTranslation = synonymsTranslation.await()
                     )
                 }
             }.awaitAll()

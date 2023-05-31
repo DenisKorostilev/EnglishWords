@@ -42,7 +42,7 @@ class ContentFragment : Fragment(R.layout.fragment_content) {
 
     private fun bindViews() {
         viewModel.resultViewItems.observe(viewLifecycleOwner) {
-            if (it != null) adapter.setDataItem(it)
+            adapter.setDataItem(it)
             binding.progressBar.visibility = INVISIBLE
         }
     }
