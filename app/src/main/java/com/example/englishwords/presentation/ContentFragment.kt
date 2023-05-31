@@ -27,6 +27,7 @@ class ContentFragment : Fragment(R.layout.fragment_content) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
+        swipe()
         bindViews()
 
     }
@@ -38,18 +39,29 @@ class ContentFragment : Fragment(R.layout.fragment_content) {
                 adapter.clearData()
                 viewModel.receiveResults(binding.editText.text.toString())
             }
-            swipeContainer.setOnRefreshListener {
-                adapter.clearData()
-                viewModel.receiveResults(binding.editText.text.toString())
-                swipeContainer.isRefreshing = false
-            }
         }
     }
 
+    private fun swipe() {
+        with(binding) {
+            swipeContainer.setOnRefreshListener {
+                adapter.clearData()
+                viewModel.receiveResults(binding.editText.text.toString())
+                swipeContainer.isRefreshing = true
+            }
+            swipeContainer.setColorSchemeResources(
+                android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light
+            )
+        }
+    }
 
     private fun bindViews() {
         viewModel.resultViewItems.observe(viewLifecycleOwner) {
             adapter.setDataItem(it)
+            binding.swipeContainer.isRefreshing = false
         }
     }
 
