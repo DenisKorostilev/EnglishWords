@@ -38,6 +38,11 @@ class ContentFragment : Fragment(R.layout.fragment_content) {
                 adapter.clearData()
                 viewModel.receiveResults(binding.editText.text.toString())
             }
+            swipeContainer.setOnRefreshListener {
+                adapter.clearData()
+                viewModel.receiveResults(binding.editText.text.toString())
+                swipeContainer.isRefreshing = false
+            }
         }
     }
 
@@ -45,7 +50,6 @@ class ContentFragment : Fragment(R.layout.fragment_content) {
     private fun bindViews() {
         viewModel.resultViewItems.observe(viewLifecycleOwner) {
             adapter.setDataItem(it)
-            binding.swipeContainer.isRefreshing = true
         }
     }
 
