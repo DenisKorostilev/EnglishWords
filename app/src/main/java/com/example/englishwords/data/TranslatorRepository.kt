@@ -2,7 +2,6 @@ package com.example.englishwords.data
 
 import com.example.englishwords.data.`interface`.RetrofitWord
 import com.example.englishwords.data.`interface`.TranslateApi
-import com.example.englishwords.presentation.TranslateDTO
 import com.example.englishwords.presentation.TranslationRequestBody
 
 class TranslatorRepository {
@@ -19,6 +18,6 @@ class TranslatorRepository {
                 return body.text
             }
         }
-        return ""
+        return "gavno"
     }
 }

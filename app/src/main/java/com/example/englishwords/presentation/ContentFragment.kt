@@ -2,12 +2,9 @@ package com.example.englishwords.presentation
 
 import android.os.Bundle
 import android.view.View
-import android.view.View.INVISIBLE
-import android.view.View.VISIBLE
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.englishwords.R
 import com.example.englishwords.databinding.FragmentContentBinding
@@ -27,7 +24,6 @@ class ContentFragment : Fragment(R.layout.fragment_content) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
-        swipe()
         bindViews()
 
     }
@@ -36,20 +32,13 @@ class ContentFragment : Fragment(R.layout.fragment_content) {
         with(binding) {
             recyclerView.adapter = adapter
             button.setOnClickListener {
-                adapter.clearData()
-                viewModel.receiveResults(binding.editText.text.toString())
+                searchWords()
             }
-        }
-    }
-
-    private fun swipe() {
-        with(binding) {
-            swipeContainer.setOnRefreshListener {
-                adapter.clearData()
-                viewModel.receiveResults(binding.editText.text.toString())
-                swipeContainer.isRefreshing = true
+            swipeRefreshLayout.setOnRefreshListener {
+                searchWords()
+                swipeRefreshLayout.isRefreshing = true
             }
-            swipeContainer.setColorSchemeResources(
+            swipeRefreshLayout.setColorSchemeResources(
                 android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
@@ -58,10 +47,15 @@ class ContentFragment : Fragment(R.layout.fragment_content) {
         }
     }
 
+    private fun searchWords() {
+        adapter.clearData()
+        viewModel.receiveResults(binding.editText.text.toString())
+    }
+
     private fun bindViews() {
         viewModel.resultViewItems.observe(viewLifecycleOwner) {
             adapter.setDataItem(it)
-            binding.swipeContainer.isRefreshing = false
+            binding.swipeRefreshLayout.isRefreshing = false
         }
     }
 

@@ -9,7 +9,6 @@ import com.example.englishwords.data.WordsRemoteRepository
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
-import okhttp3.internal.notifyAll
 
 class ContentViewModel : ViewModel() {
 

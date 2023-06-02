@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.englishwords.R
 import com.google.android.material.card.MaterialCardView
 
@@ -23,7 +22,6 @@ class ResultAdapter(
         val definitionTranslationTextView: TextView
         val partOfSpeechTranslationTextView: TextView
         val synonymsTranslationTextView: TextView
-
 
         val root: MaterialCardView
 
@@ -56,7 +54,6 @@ class ResultAdapter(
             "Часть речи: ${resultViewItem.partOfSpeechTranslation}"
         viewHolder.synonymsTranslationTextView.text =
             "Синонимы: ${resultViewItem.synonymsTranslation}"
-
         viewHolder.root.setOnClickListener {
             clickListener(resultViewItem)
         }
@@ -73,7 +70,7 @@ class ResultAdapter(
         notifyDataSetChanged()
     }
 
-    fun setData(items:  List<ResultViewItem>) {
+    fun setData(items: List<ResultViewItem>) {
         dataSet.clear()
         dataSet.addAll(items)
         notifyDataSetChanged()
