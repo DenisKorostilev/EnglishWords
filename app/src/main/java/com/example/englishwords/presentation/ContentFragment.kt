@@ -32,30 +32,33 @@ class ContentFragment : Fragment(R.layout.fragment_content) {
         with(binding) {
             recyclerView.adapter = adapter
             button.setOnClickListener {
-                searchWords()
+                incomingRequests()
             }
             swipeRefreshLayout.setOnRefreshListener {
-                searchWords()
-                swipeRefreshLayout.isRefreshing = true
+                incomingRequests()
             }
-            swipeRefreshLayout.setColorSchemeResources(
-                android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light
-            )
         }
     }
-
-    private fun searchWords() {
+    private fun incomingRequests () {
         adapter.clearData()
         viewModel.receiveResults(binding.editText.text.toString())
     }
 
     private fun bindViews() {
-        viewModel.resultViewItems.observe(viewLifecycleOwner) {
-            adapter.setDataItem(it)
-            binding.swipeRefreshLayout.isRefreshing = false
+        viewModel.screenState.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is ScreenState.Success -> {
+                    adapter.setDataItem(state.resultViewItems)
+                    binding.swipeRefreshLayout.isRefreshing = false
+                }
+                ScreenState.Loading -> {
+                    binding.swipeRefreshLayout.isRefreshing = true
+                }
+                ScreenState.Init -> Unit
+                is ScreenState.Error -> {
+                    binding.swipeRefreshLayout.isRefreshing = false
+                }
+            }
         }
     }
 
@@ -63,6 +66,7 @@ class ContentFragment : Fragment(R.layout.fragment_content) {
         val testFragment = TestFragment()
         testFragment.arguments = bundleOf(RESULT_VIEW_ITEM_KEY to resultViewItem)
         val transaction = parentFragmentManager.beginTransaction()
+        transaction.addToBackStack(null)
         transaction.replace(R.id.fragment_container_view, testFragment)
         transaction.commit()
     }
