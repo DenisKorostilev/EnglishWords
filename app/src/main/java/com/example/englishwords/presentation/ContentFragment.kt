@@ -2,12 +2,9 @@ package com.example.englishwords.presentation
 
 import android.os.Bundle
 import android.view.View
-import android.view.View.INVISIBLE
-import android.view.View.VISIBLE
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.englishwords.R
 import com.example.englishwords.databinding.FragmentContentBinding
@@ -39,19 +36,29 @@ class ContentFragment : Fragment(R.layout.fragment_content) {
             }
             swipeRefreshLayout.setOnRefreshListener {
                 incomingRequests()
-                swipeRefreshLayout.isRefreshing = true
             }
         }
     }
-    private fun incomingRequests (){
+    private fun incomingRequests () {
         adapter.clearData()
         viewModel.receiveResults(binding.editText.text.toString())
     }
 
     private fun bindViews() {
-        viewModel.resultViewItems.observe(viewLifecycleOwner) {
-            adapter.setDataItem(it)
-            binding.swipeRefreshLayout.isRefreshing = false
+        viewModel.screenState.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is ScreenState.Success -> {
+                    adapter.setDataItem(state.resultViewItems)
+                    binding.swipeRefreshLayout.isRefreshing = false
+                }
+                ScreenState.Loading -> {
+                    binding.swipeRefreshLayout.isRefreshing = true
+                }
+                ScreenState.Init -> Unit
+                is ScreenState.Error -> {
+                    binding.swipeRefreshLayout.isRefreshing = false
+                }
+            }
         }
     }
 
@@ -59,6 +66,7 @@ class ContentFragment : Fragment(R.layout.fragment_content) {
         val testFragment = TestFragment()
         testFragment.arguments = bundleOf(RESULT_VIEW_ITEM_KEY to resultViewItem)
         val transaction = parentFragmentManager.beginTransaction()
+        transaction.addToBackStack(null)
         transaction.replace(R.id.fragment_container_view, testFragment)
         transaction.commit()
     }
