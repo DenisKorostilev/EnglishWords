@@ -4,9 +4,9 @@ import com.example.englishwords.data.`interface`.WordsApi
 import com.example.englishwords.data.`interface`.RetrofitWord
 import com.example.englishwords.presentation.ResultDTO
 
-class WordsRepository {
+class WordsRepository(private val wordsApi: WordsApi) {
 
-    private val wordsApi = RetrofitWord.getWordsInstance().create(WordsApi::class.java)
+
     suspend fun getWordData(word: String): NetworkResult<List<ResultDTO>> {
         val result = wordsApi.getWordResults(word)
         if (result.isSuccessful) {
