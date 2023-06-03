@@ -4,6 +4,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavDirections
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.englishwords.R
 import com.example.englishwords.databinding.FragmentContentBinding
@@ -63,11 +66,14 @@ class ContentFragment : Fragment(R.layout.fragment_content) {
     }
 
     private fun moveToTestFragment(resultViewItem: ResultViewItem) {
-        val testFragment = TestFragment()
-        testFragment.arguments = bundleOf(RESULT_VIEW_ITEM_KEY to resultViewItem)
+        findNavController().navigate(ContentFragmentDirections.actionContentFragmentToTestFragment(resultViewItem))
+
+
+
+        /*testFragment.arguments = bundleOf(RESULT_VIEW_ITEM_KEY to resultViewItem)
         val transaction = parentFragmentManager.beginTransaction()
         transaction.addToBackStack(null)
         transaction.replace(R.id.fragment_container_view, testFragment)
-        transaction.commit()
+        transaction.commit()*/
     }
 }

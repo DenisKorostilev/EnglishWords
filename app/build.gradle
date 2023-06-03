@@ -2,11 +2,14 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-parcelize'
+    id 'androidx.navigation.safeargs'
+
 }
 
 android {
     namespace 'com.example.englishwords'
     compileSdk 33
+
 
     defaultConfig {
         applicationId "com.example.englishwords"
@@ -38,6 +41,10 @@ android {
 }
 
 dependencies {
+
+    implementation "androidx.navigation:navigation-fragment:2.5.3"
+    implementation "androidx.navigation:navigation-ui:2.5.3"
+    implementation 'androidx.navigation:navigation-safe-args-gradle-plugin:2.5.3'
     implementation 'io.insert-koin:koin-android:3.4.1'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
