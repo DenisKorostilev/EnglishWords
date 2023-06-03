@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".EnglishWordsApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -24,9 +25,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".presentation.TestActivity"
-            android:exported="true">
-    </activity>
     </application>
 
 </manifest>

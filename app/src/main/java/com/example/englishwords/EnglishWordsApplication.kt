@@ -13,18 +13,18 @@ import org.koin.core.context.startKoin
 import org.koin.dsl.module
 
 
-class EnglishWordsApplication: Application () {
+class EnglishWordsApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
         val appModule = module {
-            single { WordsRepository (get()) }
-            single { TranslatorRepository (get()) }
-            single { TranslateUseCase (get()) }
+            single { WordsRepository(get()) }
+            single { TranslatorRepository(get()) }
+            single { TranslateUseCase(get()) }
             single { RetrofitWord.getTranslateInstance().create(TranslateApi::class.java) }
             single { RetrofitWord.getWordsInstance().create(WordsApi::class.java) }
 
-            viewModel { ContentViewModel (get(), get()) }
+            viewModel { ContentViewModel(get(), get()) }
         }
         startKoin {
             modules(appModule)
