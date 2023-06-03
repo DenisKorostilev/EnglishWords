@@ -67,13 +67,5 @@ class ContentFragment : Fragment(R.layout.fragment_content) {
 
     private fun moveToTestFragment(resultViewItem: ResultViewItem) {
         findNavController().navigate(ContentFragmentDirections.actionContentFragmentToTestFragment(resultViewItem))
-
-
-
-        /*testFragment.arguments = bundleOf(RESULT_VIEW_ITEM_KEY to resultViewItem)
-        val transaction = parentFragmentManager.beginTransaction()
-        transaction.addToBackStack(null)
-        transaction.replace(R.id.fragment_container_view, testFragment)
-        transaction.commit()*/
     }
 }

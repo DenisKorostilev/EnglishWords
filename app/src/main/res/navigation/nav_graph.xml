@@ -18,8 +18,8 @@
         android:name="com.example.englishwords.presentation.TestFragment"
         android:label="TestFragment" >
         <argument
-            android:name = "myArg"
-            app:argType="ResultViewItem"
+            android:name = "resultViewItem"
+            app:argType="com.example.englishwords.presentation.ResultViewItem"
             app:nullable="false"
             />
     </fragment>
