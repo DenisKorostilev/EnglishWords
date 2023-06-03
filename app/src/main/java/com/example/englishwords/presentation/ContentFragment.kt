@@ -36,10 +36,12 @@ class ContentFragment : Fragment(R.layout.fragment_content) {
             }
             swipeRefreshLayout.setOnRefreshListener {
                 incomingRequests()
+                swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_green_light)
             }
         }
     }
-    private fun incomingRequests () {
+
+    private fun incomingRequests() {
         adapter.clearData()
         viewModel.receiveResults(binding.editText.text.toString())
     }
@@ -51,9 +53,11 @@ class ContentFragment : Fragment(R.layout.fragment_content) {
                     adapter.setDataItem(state.resultViewItems)
                     binding.swipeRefreshLayout.isRefreshing = false
                 }
+
                 ScreenState.Loading -> {
                     binding.swipeRefreshLayout.isRefreshing = true
                 }
+
                 ScreenState.Init -> Unit
                 is ScreenState.Error -> {
                     binding.swipeRefreshLayout.isRefreshing = false

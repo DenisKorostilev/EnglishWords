@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.englishwords.data.NetworkResult
-import com.example.englishwords.data.TranslatorRepository
 import com.example.englishwords.data.WordsRepository
 import com.example.englishwords.domain.TranslateUseCase
 import kotlinx.coroutines.async

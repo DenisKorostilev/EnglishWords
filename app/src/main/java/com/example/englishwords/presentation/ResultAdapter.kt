@@ -1,5 +1,6 @@
 package com.example.englishwords.presentation
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,6 +44,7 @@ class ResultAdapter(
         return ViewHolder(view)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         val resultViewItem = dataSet[position]
         viewHolder.definitionTextView.text = "Definition: ${resultViewItem.definition}"
@@ -60,19 +62,16 @@ class ResultAdapter(
     }
 
     override fun getItemCount() = dataSet.size
+    @SuppressLint("NotifyDataSetChanged")
     fun clearData() {
         dataSet.clear()
         notifyDataSetChanged()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setDataItem(item: List<ResultViewItem>) {
         dataSet.addAll(item)
         notifyDataSetChanged()
     }
 
-    fun setData(items: List<ResultViewItem>) {
-        dataSet.clear()
-        dataSet.addAll(items)
-        notifyDataSetChanged()
-    }
 }
