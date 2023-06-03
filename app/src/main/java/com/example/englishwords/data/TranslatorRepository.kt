@@ -4,9 +4,11 @@ import com.example.englishwords.data.`interface`.RetrofitWord
 import com.example.englishwords.data.`interface`.TranslateApi
 import com.example.englishwords.presentation.TranslationRequestBody
 
-class TranslatorRepository {
-    private val wordsTranslateApi =
-        RetrofitWord.getTranslateInstance().create(TranslateApi::class.java)
+class TranslatorRepository(
+    private val wordsTranslateApi: TranslateApi
+
+) {
+
 
     suspend fun getTranslation(text: String): NetworkResult<String> {
 

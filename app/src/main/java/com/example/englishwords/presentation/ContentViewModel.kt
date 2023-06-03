@@ -12,10 +12,11 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 
-class ContentViewModel : ViewModel() {
+class ContentViewModel(
+    private val wordsRepository: WordsRepository,
+    private val translatorUseCase: TranslateUseCase
+) : ViewModel() {
 
-    private val wordsRepository = WordsRepository()
-    private val translatorUseCase = TranslateUseCase()
     private val _screenState = MutableLiveData<ScreenState>(ScreenState.Init)
     val screenState: LiveData<ScreenState> = _screenState
 

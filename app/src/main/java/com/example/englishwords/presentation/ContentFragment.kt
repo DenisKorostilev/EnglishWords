@@ -4,15 +4,15 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.englishwords.R
 import com.example.englishwords.databinding.FragmentContentBinding
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ContentFragment : Fragment(R.layout.fragment_content) {
 
     private val binding: FragmentContentBinding by viewBinding()
-    private val viewModel: ContentViewModel by viewModels()
+    private val viewModel: ContentViewModel by viewModel()
     private val adapter = ResultAdapter(mutableListOf()) { resultViewItem ->
         moveToTestFragment(resultViewItem)
     }
