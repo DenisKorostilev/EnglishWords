@@ -42,7 +42,8 @@ class ContentFragment : Fragment(R.layout.fragment_content) {
             }
         }
     }
-    private fun incomingRequests () {
+
+    private fun incomingRequests() {
         adapter.clearData()
         viewModel.receiveResults(binding.editText.text.toString())
     }
@@ -66,6 +67,10 @@ class ContentFragment : Fragment(R.layout.fragment_content) {
     }
 
     private fun moveToTestFragment(resultViewItem: ResultViewItem) {
-        findNavController().navigate(ContentFragmentDirections.actionContentFragmentToTestFragment(resultViewItem))
+        findNavController().navigate(
+            ContentFragmentDirections.actionContentFragmentToTestFragment(
+                resultViewItem
+            )
+        )
     }
 }
