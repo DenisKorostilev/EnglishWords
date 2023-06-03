@@ -2,11 +2,8 @@ package com.example.englishwords.presentation
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.englishwords.R
 import com.example.englishwords.databinding.FragmentContentBinding
@@ -35,15 +32,15 @@ class ContentFragment : Fragment(R.layout.fragment_content) {
         with(binding) {
             recyclerView.adapter = adapter
             button.setOnClickListener {
-                incomingRequests()
+                receiveData()
             }
             swipeRefreshLayout.setOnRefreshListener {
-                incomingRequests()
+                receiveData()
             }
         }
     }
 
-    private fun incomingRequests() {
+    private fun receiveData() {
         adapter.clearData()
         viewModel.receiveResults(binding.editText.text.toString())
     }
